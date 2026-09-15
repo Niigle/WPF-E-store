@@ -24,7 +24,7 @@ namespace E_store.Repository
                            COALESCE(SUM(oi.quantity * oi.price_at_purchase), 0) AS total_value
                     FROM orders o
                     JOIN order_items oi ON oi.order_id = o.id
-                    WHERE o.created_at BETWEEN @start AND @end";
+                    WHERE o.created_on BETWEEN @start AND @end";
 
                 using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
                 {
@@ -49,7 +49,7 @@ namespace E_store.Repository
                     JOIN order_items oi ON oi.order_id = o.id
                     JOIN store_products sp ON sp.id = oi.store_product_id
                     JOIN stores s ON s.id = sp.store_id
-                    WHERE o.created_at BETWEEN @start AND @end
+                    WHERE o.created_on BETWEEN @start AND @end
                     GROUP BY s.id, s.name
                     ORDER BY total_value DESC";
 
@@ -80,7 +80,7 @@ namespace E_store.Repository
                     JOIN order_items oi ON oi.order_id = o.id
                     JOIN store_products sp ON sp.id = oi.store_product_id
                     JOIN products p ON p.id = sp.product_id
-                    WHERE o.created_at BETWEEN @start AND @end
+                    WHERE o.created_on BETWEEN @start AND @end
                     GROUP BY p.type
                     ORDER BY total_value DESC";
 
@@ -126,7 +126,7 @@ namespace E_store.Repository
             FROM orders o
             JOIN order_items oi ON oi.order_id = o.id
             JOIN store_products sp ON sp.id = oi.store_product_id
-            WHERE o.created_at BETWEEN @start AND @end
+            WHERE o.created_on BETWEEN @start AND @end
               AND sp.store_id IN ({storeIdParams})";
 
                 using (MySqlCommand cmd = new MySqlCommand(queryTotal, conn))
@@ -154,7 +154,7 @@ namespace E_store.Repository
             JOIN order_items oi ON oi.order_id = o.id
             JOIN store_products sp ON sp.id = oi.store_product_id
             JOIN stores s ON s.id = sp.store_id
-            WHERE o.created_at BETWEEN @start AND @end
+            WHERE o.created_on BETWEEN @start AND @end
               AND sp.store_id IN ({storeIdParams})
             GROUP BY s.id, s.name
             ORDER BY total_value DESC";
@@ -188,7 +188,7 @@ namespace E_store.Repository
             JOIN order_items oi ON oi.order_id = o.id
             JOIN store_products sp ON sp.id = oi.store_product_id
             JOIN products p ON p.id = sp.product_id
-            WHERE o.created_at BETWEEN @start AND @end
+            WHERE o.created_on BETWEEN @start AND @end
               AND sp.store_id IN ({storeIdParams})
             GROUP BY p.type
             ORDER BY total_value DESC";
