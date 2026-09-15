@@ -28,6 +28,7 @@ namespace E_store.Views
     {
         private readonly StoreRepository storeRepository = new StoreRepository();
         private readonly RoleRepository roleRepository = new RoleRepository();
+        private readonly CategoryRepository categoryRepository = new CategoryRepository();
 
         public AddStorePage()
         {
@@ -37,6 +38,7 @@ namespace E_store.Views
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetManagers();
+            GetCategories();
         }
 
         private void GetManagers()
@@ -58,6 +60,18 @@ namespace E_store.Views
             }
         }
 
+        private void GetCategories()
+        {
+            var kategorije = categoryRepository.UzmiSve();
+            CmbCategory.ItemsSource = kategorije;
+
+            if (kategorije.Count == 0)
+            {
+                LblMessage.Foreground = System.Windows.Media.Brushes.Red;
+                LblMessage.Text = "No category available.";
+            }
+        }
+
         private void BtnAddStore_Click(object sender, RoutedEventArgs e)
         {
             LblMessage.Foreground = System.Windows.Media.Brushes.Red;
@@ -65,13 +79,17 @@ namespace E_store.Views
 
             string name = TxtName.Text.Trim();
             string address = TxtAddress.Text.Trim();
-            string type = TxtType.Text.Trim();
             string phone = TxtPhone.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(address) ||
-                string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(phone))
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(address) || string.IsNullOrWhiteSpace(phone))
             {
                 LblMessage.Text = "All fields are mandatory.";
+                return;
+            }
+
+            if (CmbCategory.SelectedValue == null)
+            {
+                LblMessage.Text = "Choose a category.";
                 return;
             }
 
@@ -87,9 +105,9 @@ namespace E_store.Views
                 {
                     Name = name,
                     Address = address,
-                    Type = type,
+                    CategoryId = (uint)CmbCategory.SelectedValue,
                     Phone = phone,
-                    Manager = (uint)CmbManager.SelectedValue,
+                    ManagerId = (uint)CmbManager.SelectedValue,
                     IsActive = ChkActive.IsChecked == true ? 1 : 0
                 };
 
@@ -109,7 +127,7 @@ namespace E_store.Views
         {
             TxtName.Clear();
             TxtAddress.Clear();
-            TxtType.Clear();
+            CmbCategory.SelectedIndex = -1;
             TxtPhone.Clear();
             CmbManager.SelectedIndex = -1;
             ChkActive.IsChecked = true;

@@ -18,8 +18,8 @@
         <TextBlock Text="Address:"/>
         <TextBox x:Name="TxtAddress" Margin="0,5,0,10"/>
 
-        <TextBlock Text="Store type:"/>
-        <TextBox x:Name="TxtType" Margin="0,5,0,10"/>
+        <TextBlock Text="Store category:"/>
+        <ComboBox x:Name="CmbCategory" Margin="0,5,0,10" DisplayMemberPath="Name" SelectedValuePath="Id"/>
 
         <TextBlock Text="Telephone:"/>
         <TextBox x:Name="TxtPhone" Margin="0,5,0,10"/>

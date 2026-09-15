@@ -9,9 +9,10 @@ namespace E_store.Models
         public uint Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public string Type { get; set; }
+        public uint CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public string Phone { get; set; }
-        public uint Manager { get; set; }
+        public uint ManagerId { get; set; }
         public int IsActive { get; set; } = 1;
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }

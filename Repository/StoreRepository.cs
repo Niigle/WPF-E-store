@@ -18,15 +18,15 @@ namespace E_store.Repository
             using (MySqlConnection conn = db.GetConnection())
             {
                 conn.Open();
-                string query = @"INSERT INTO stores (name, address, type, phone, manager, is_active)
-                                    VALUES (@name, @address, @type, @phone, @manager, @isActive)";
+                string query = @"INSERT INTO stores (name, address, category_id, phone, manager_id, is_active)
+                          VALUES (@name, @address, @categoryId, @phone, @managerId, @isActive)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", store.Name);
                 cmd.Parameters.AddWithValue("@address", store.Address);
-                cmd.Parameters.AddWithValue("@type", store.Type);
+                cmd.Parameters.AddWithValue("@categoryId", store.CategoryId);
                 cmd.Parameters.AddWithValue("@phone", store.Phone);
-                cmd.Parameters.AddWithValue("@manager", store.Manager);
+                cmd.Parameters.AddWithValue("@managerId", store.ManagerId);
                 cmd.Parameters.AddWithValue("@isActive", store.IsActive);
 
                 cmd.ExecuteNonQuery();
@@ -40,9 +40,10 @@ namespace E_store.Repository
             using (MySqlConnection conn = db.GetConnection())
             {
                 conn.Open();
-                string query = @"SELECT s.*, CONCAT(u.firstname, ' ', u.lastname) AS manager_name
+                string query = @"SELECT s.*, CONCAT(u.firstname, ' ', u.lastname) AS manager_name, c.name AS category_name
                                   FROM stores s
-                                  INNER JOIN users u ON u.id = s.manager";
+                                  INNER JOIN users u ON u.id = s.manager_id
+                                  INNER JOIN category c ON c.id = s.category_id";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -55,9 +56,10 @@ namespace E_store.Repository
                             Id = reader.GetUInt32("id"),
                             Name = reader.GetString("name"),
                             Address = reader.GetString("address"),
-                            Type = reader.GetString("type"),
+                            CategoryId = reader.GetUInt32("category_id"),
+                            CategoryName = reader.GetString("category_name"),
                             Phone = reader.GetString("phone"),
-                            Manager = reader.GetUInt32("manager"),
+                            ManagerId = reader.GetUInt32("manager_id"),
                             IsActive = reader.GetInt32("is_active"),
                             CreatedOn = reader.GetDateTime("created_on"),
                             ModifiedOn = reader.GetDateTime("modified_on"),
@@ -67,6 +69,7 @@ namespace E_store.Repository
                 }
             }
 
+            
             return stores;
         }
 
@@ -77,7 +80,10 @@ namespace E_store.Repository
             using (MySqlConnection conn = db.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT * FROM stores WHERE manager = @managerId AND is_active = 1";
+                string query = @"SELECT s.*, c.name AS category_name
+                          FROM stores s
+                          INNER JOIN category c ON c.id = s.category_id
+                          WHERE s.manager_id = @managerId AND s.is_active = 1";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@managerId", managerId);
 
@@ -90,9 +96,9 @@ namespace E_store.Repository
                             Id = reader.GetUInt32("id"),
                             Name = reader.GetString("name"),
                             Address = reader.GetString("address"),
-                            Type = reader.GetString("type"),
+                            CategoryId = reader.GetUInt32("category_id"),
                             Phone = reader.GetString("phone"),
-                            Manager = reader.GetUInt32("manager"),
+                            ManagerId = reader.GetUInt32("manager_id"),
                             IsActive = reader.GetInt32("is_active")
                         });
                     }
