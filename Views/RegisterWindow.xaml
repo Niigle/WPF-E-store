@@ -1,0 +1,38 @@
+﻿<Window x:Class="E_store.Views.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:E_store.Views"
+        mc:Ignorable="d"
+        Title="RegisterWindow" Height="550" Width="380">
+    <StackPanel Margin="20">
+        <TextBlock Text="Name:"/>
+        <TextBox x:Name="TxtFirstName" Margin="0,5,0,10"/>
+
+        <TextBlock Text="Surname:"/>
+        <TextBox x:Name="TxtLastName" Margin="0,5,0,10"/>
+
+        <TextBlock Text="Username:"/>
+        <TextBox x:Name="TxtUsername" Margin="0,5,0,10"/>
+
+        <TextBlock Text="Email:"/>
+        <TextBox x:Name="TxtEmail" Margin="0,5,0,10"/>
+
+        <TextBlock Text="Address:"/>
+        <TextBox x:Name="TxtAddress" Margin="0,5,0,10"/>
+
+        <TextBlock Text="Telephone:"/>
+        <TextBox x:Name="TxtPhone" Margin="0,5,0,10"/>
+
+        <TextBlock Text="Password:"/>
+        <PasswordBox x:Name="TxtPassword" Margin="0,5,0,10"/>
+
+        <TextBlock Text="Confirm password:"/>
+        <PasswordBox x:Name="TxtPasswordConfirm" Margin="0,5,0,10"/>
+
+        <Button Content="Register" Click="BtnRegister_Click" Height="30" Margin="0,10,0,0"/>
+
+        <TextBlock x:Name="LblMessage" Foreground="Red" Margin="0,10,0,0" TextWrapping="Wrap"/>
+    </StackPanel>
+</Window>

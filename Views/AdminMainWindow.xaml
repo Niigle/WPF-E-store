@@ -1,0 +1,92 @@
+﻿<Window x:Class="E_store.Views.AdminMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:E_store"
+        mc:Ignorable="d"
+        Title="AdminMainWindow" Height="650" Width="1000">
+    <Window.Resources>
+        <Style x:Key="SidebarButton" TargetType="Button">
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EAEAEA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SectionLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0,10,0,15"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#1E1E1E">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25,30,25,20">
+
+                    <TextBlock Text="Users:" Style="{StaticResource SectionLabel}"/>
+
+                    <Button Content="Add store" Style="{StaticResource SidebarButton}"
+                            Click="BtnAddStore_Click"/>
+
+                    <Button Content="Add manager" Style="{StaticResource SidebarButton}"
+                            Click="BtnAddManager_Click"/>
+
+                    <Button Content="Edit user" Style="{StaticResource SidebarButton}"
+                            Click="BtnEditUser_Click"/>
+
+                    <Button Content="View stores" Style="{StaticResource SidebarButton}"
+                            Click="BtnViewStores_Click"/>
+                    
+                    <TextBlock Text="Reports" Style="{StaticResource SectionLabel}" Margin="0,25,0,15"/>
+
+                    <Button Content="Crate monthly report" Style="{StaticResource SidebarButton}"
+                            Click="BtnMonthlyReport_Click"/>
+
+                    <Button Content="Crate daily report" Style="{StaticResource SidebarButton}"
+                            Click="BtnDailyReport_Click"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+        
+        <Grid Grid.Column="1" Background="#F5F5F5">
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+
+            <TextBlock x:Name="LblWelcome"
+                       Text="Welcome, Admin"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#888"/>
+        </Grid>
+    </Grid>
+</Window>

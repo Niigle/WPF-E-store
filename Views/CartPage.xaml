@@ -1,0 +1,39 @@
+﻿<Page x:Class="E_store.Views.CartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:E_store.Views"
+      mc:Ignorable="d" 
+      Title="Cart"
+      Loaded="Page_Loaded">
+
+    <StackPanel Margin="30">
+        <TextBlock Text="Your cart" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <DataGrid x:Name="GridCart" AutoGenerateColumns="False" CanUserAddRows="False"
+                  Height="350" Margin="0,0,0,15">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Product" Binding="{Binding Name}" Width="200" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Store" Binding="{Binding StoreName}" Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=N2}" Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100"/>
+                <DataGridTextColumn Header="TotalAmount" Binding="{Binding Ukupno, StringFormat=N2}" Width="100" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove" Click="BtnRemove_Click" Tag="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock x:Name="LblTotal" FontSize="16" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <Button Content="Complete purchase" Height="40" Width="200" HorizontalAlignment="Left"
+                Click="BtnCompletePurchase_Click"/>
+
+        <TextBlock x:Name="LblMessage" Foreground="Red" Margin="0,15,0,0" TextWrapping="Wrap"/>
+    </StackPanel>
+</Page>
